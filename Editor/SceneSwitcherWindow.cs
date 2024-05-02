@@ -179,7 +179,9 @@ namespace GameJam.Editor.SceneSwitcher
 
                 var current = SceneManager.GetSceneByPath(path);
                 if (current != null && current.isLoaded)
+                {
                     GUI.backgroundColor = Color.green;
+                }
 
                 if (GUILayout.Button(System.IO.Path.GetFileNameWithoutExtension(path)))
                 {
