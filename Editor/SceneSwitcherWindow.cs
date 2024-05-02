@@ -364,11 +364,25 @@ namespace GameJam.Editor.SceneSwitcher
         {
             GUIContent content = new GUIContent("Edit Mode");
             menu.AddItem(content, _editing, ToggleEdit);
+            
+            content = new GUIContent("Load Project Scenes");
+            menu.AddItem(content, false, LoadProjectScenes);
         }
 
         private void ToggleEdit()
         {
             _editing = !_editing;
+        }
+
+        private void LoadProjectScenes()
+        {
+            for (int i = 0; i < SceneManager.sceneCountInBuildSettings; ++i)
+            {
+                var path = SceneUtility.GetScenePathByBuildIndex(i);
+                Debug.Log($"Adding {path}");
+                var guid = AssetDatabase.AssetPathToGUID(path);
+                _sceneSwitcherData.AddScene(guid);
+            }
         }
 
         #endregion
