@@ -316,6 +316,14 @@ namespace GameJam.Editor.SceneSwitcher
             var closeScenes = sceneData.closeScenes == BooleanOverride.Default ? _sceneSwitcherData.closeScenes : (sceneData.closeScenes == BooleanOverride.Yes);
             var loadAdditively = sceneData.loadAdditive == BooleanOverride.Default ? _sceneSwitcherData.loadAdditive : (sceneData.loadAdditive == BooleanOverride.Yes);
 
+            // Toggle a scene if it's already loaded.
+            var current = SceneManager.GetSceneByPath(path);
+            if (current != null && current.isLoaded)
+            {
+                EditorSceneManager.CloseScene(current, false);
+                return;
+            }
+
             var scene = EditorSceneManager.OpenScene(path, loadAdditively ? OpenSceneMode.Additive : OpenSceneMode.Single);
 
             if (!closeScenes)
